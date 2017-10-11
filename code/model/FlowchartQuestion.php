@@ -2,10 +2,6 @@
 
 class FlowchartQuestion extends DataObject
 {
-    /**
-     * @var array
-     * @config
-     */
     private static $db = [
         'Content' => 'HTMLText',
         'Info' => 'HTMLText',
@@ -15,27 +11,15 @@ class FlowchartQuestion extends DataObject
         'AnswerImageAfterContent' => 'Boolean'
     ];
 
-    /**
-     * @var array
-     * @config
-     */
     private static $has_one = [
         'Flowchart' => 'Flowchart',
         'AnswerImage' => 'Image'
     ];
 
-    /**
-     * @var array
-     * @config
-     */
     private static $many_many = [
         'Responses' => 'FlowchartResponse'
     ];
 
-    /**
-     * @var array
-     * @config
-     */
     private static $summary_fields = [
         'ID' => 'ID',
         'ContentSummary' => 'Question summary',
@@ -44,15 +28,8 @@ class FlowchartQuestion extends DataObject
         'AnswerSummary' => 'Answer summary'
     ];
 
-    /**
-     * @var string
-     * @config
-     */
     private static $flowcharts_asset_folder = 'flowcharts';
 
-    /**
-     * @return FieldList
-     */
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
@@ -125,9 +102,6 @@ class FlowchartQuestion extends DataObject
         return $fields;
     }
 
-    /**
-     * @return String The Title based on the Question
-     */
     public function Title()
     {
         return $this->getTitle();
@@ -138,44 +112,26 @@ class FlowchartQuestion extends DataObject
         return sprintf('%d - %s', $this->ID, $this->ContentSummary());
     }
 
-    /**
-     * @return String The Title based on the Question
-     */
     public function ContentSummary()
     {
         return strip_tags($this->Content);
     }
 
-    /**
-     * @return String The Title based on the Question
-     */
     public function InfoSummary()
     {
         return strip_tags($this->Info);
     }
 
-    /**
-     * @return String The Title based on the Question
-     */
     public function AnswerSummary()
     {
         return strip_tags($this->Answer);
     }
 
-    /**
-     * @return String The assets folder name for FeatureImages
-     */
     public function FolderName()
     {
         return static::$flowcharts_asset_folder;
     }
 
-    /**
-     * Get a link to the parent flowchart page.
-     * This is required by SOLR so that FlowStates can be clicked on in search results.
-     *
-     * @return string
-     */
     public function Link($action = 'show')
     {
         if ($this->FlowchartID && $this->Flowchart()->getCurrentPage()) {
@@ -184,44 +140,9 @@ class FlowchartQuestion extends DataObject
         return null;
     }
 
-    /**
-     * Returns a comma separated string of field names that are searchable {@link getSearchResults()}
-     *
-     * @return string
-     */
     protected function getSearchableFields()
     {
         return implode(self::$searchable_fields, ',');
-    }
-
-    /**
-     * Returns the FlowState objects that match the search query, using a boolean mode fulltext search
-     *
-     * @param string $searchQuery
-     */
-    public function getSearchResults($searchQuery)
-    {
-        return DataObject::get(
-            "FlowchartQuestion",
-            "MATCH (". $this->getSearchableFields() .") AGAINST ('". $searchQuery ."' IN BOOLEAN MODE)"
-        );
-    }
-
-    /**
-     * Returns a custom SearchContext that matches search queries with filters on the searchable fields in this object
-     *
-     * @TODO make this actually search
-     * @return SearchContext
-     */
-    public function getCustomSearchContext()
-    {
-        $fields = new FieldList(self::$searchable_fields);
-        $filters = array(
-            'Content' => new PartialMatchFilter('Content'),
-            'Info' => new PartialMatchFilter('Info'),
-            'Answer' => new PartialMatchFilter('Answer')
-        );
-        return new SearchContext($this->class, $fields, $filters);
     }
 
     public function canView($member = null)
