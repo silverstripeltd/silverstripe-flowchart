@@ -1,0 +1,56 @@
+.flowchart {
+    padding: 0.5rem 0;
+}
+
+.flowchart__question {
+    padding: 1rem 0;
+}
+
+.flowchart__question--hidden {
+    display: none;
+}
+
+.flowchart__question-content,
+.flowchart__question-responses,
+.flowchart__question-info {
+    width: 100%;
+    display: block;
+    float: left;
+}
+
+.flowchart__question-responses {
+    padding-bottom: 1rem;
+}
+
+.flowchart__question-info {
+    display: none;
+    padding: 1.5rem;
+    padding-bottom: 0;
+    background-color: #eee;
+}
+
+.flowchart__question-answer {
+    margin-top: 1rem;
+}
+
+.flowchart__question-content-more {
+    font-size: 12px;
+}
+
+.flowchart__form {
+    display: none;
+}
+
+.flowchart__form fieldset {
+    padding-top: 1rem;
+    padding-bottom: .25rem;
+}
+
+.flowchart__form fieldset label {
+    display: block;
+}
+
+.flowchart__form fieldset.ratings label.input-label {
+    display: inline-block;
+    margin-right: .5rem;
+}

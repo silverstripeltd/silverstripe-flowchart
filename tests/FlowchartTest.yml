@@ -1,0 +1,50 @@
+FlowchartQuestion:
+  Math1:
+    Content: 'Do you like math?'
+    Info: ''
+    Answer: ''
+  Math2:
+    Content: '2+2=4'
+    Info: 'Addition is fun!'
+    Answer: ''
+  Math3:
+    Content: ''
+    Info: ''
+    Answer: 'Math is very fun :('
+  Math4:
+    Content: 'Correct'
+    Info: ''
+    Answer: 'Math is awesome!!!'
+
+FlowchartFeedback:
+  Test:
+    IP: '127.0.0.1'
+    Feedback: 'Testing 1234.'
+  Testing:
+    IP: '127.0.0.1'
+    Feedback: 'Testing 1234 this is some awesome feedback.'
+
+FlowchartVote:
+  1:
+    IP: '127.0.0.1'
+    Value: 1
+  2:
+    IP: '127.0.0.1',
+    Value: 2
+  3:
+    IP: '127.0.0.1',
+    Value: 3
+  4:
+    IP: '127.0.0.1',
+    Value: 4
+  5:
+    IP: '127.0.0.1',
+    Value: 5
+
+Flowchart:
+  Default:
+    Title: 'Flowchart'
+    Questions: =>FlowchartQuestion.Math1,=>FlowchartQuestion.Math2,=>FlowchartQuestion.Math3,=>FlowchartQuestion.Math4
+    Feedback: =>FlowchartFeedback.Test,=>FlowchartFeedback.Testing
+    Votes: =>FlowchartVote.1,=>FlowchartVote.2,=>FlowchartVote.3
+

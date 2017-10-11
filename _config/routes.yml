@@ -1,0 +1,7 @@
+---
+Name: flowchartroutes
+After: framework/routes#coreroutes
+---
+Director:
+  rules:
+    '_flowchart//$Action': 'FlowchartController'
