@@ -132,19 +132,6 @@ class FlowchartQuestion extends DataObject
         return static::$flowcharts_asset_folder;
     }
 
-    public function Link($action = 'show')
-    {
-        if ($this->FlowchartID && $this->Flowchart()->getCurrentPage()) {
-            return $this->Flowchart()->getCurrentPage()->Link();
-        }
-        return null;
-    }
-
-    protected function getSearchableFields()
-    {
-        return implode(self::$searchable_fields, ',');
-    }
-
     public function canView($member = null)
     {
         return (Permission::checkMember($member, array('VIEW_FLOWCHART')));
