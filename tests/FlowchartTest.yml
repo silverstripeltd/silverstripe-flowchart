@@ -1,4 +1,4 @@
-FlowchartQuestion:
+ChTombleson\Flowchart\Models\FlowchartQuestion:
   Math1:
     Content: 'Do you like math?'
     Info: ''
@@ -16,7 +16,7 @@ FlowchartQuestion:
     Info: ''
     Answer: 'Math is awesome!!!'
 
-FlowchartFeedback:
+ChTombleson\Flowchart\Models\FlowchartFeedback:
   Test:
     IP: '127.0.0.1'
     Feedback: 'Testing 1234.'
@@ -24,27 +24,36 @@ FlowchartFeedback:
     IP: '127.0.0.1'
     Feedback: 'Testing 1234 this is some awesome feedback.'
 
-FlowchartVote:
+ChTombleson\Flowchart\Models\FlowchartVote:
   1:
     IP: '127.0.0.1'
     Value: 1
   2:
-    IP: '127.0.0.1',
+    IP: '127.0.0.1'
     Value: 2
   3:
-    IP: '127.0.0.1',
+    IP: '127.0.0.1'
     Value: 3
   4:
-    IP: '127.0.0.1',
+    IP: '127.0.0.1'
     Value: 4
   5:
-    IP: '127.0.0.1',
+    IP: '127.0.0.1'
     Value: 5
 
-Flowchart:
+ChTombleson\Flowchart\Models\Flowchart:
   Default:
     Title: 'Flowchart'
-    Questions: =>FlowchartQuestion.Math1,=>FlowchartQuestion.Math2,=>FlowchartQuestion.Math3,=>FlowchartQuestion.Math4
-    Feedback: =>FlowchartFeedback.Test,=>FlowchartFeedback.Testing
-    Votes: =>FlowchartVote.1,=>FlowchartVote.2,=>FlowchartVote.3
+    Questions:
+      - =>ChTombleson\Flowchart\Models\FlowchartQuestion.Math1
+      - =>ChTombleson\Flowchart\Models\FlowchartQuestion.Math2
+      - =>ChTombleson\Flowchart\Models\FlowchartQuestion.Math3
+      - =>ChTombleson\Flowchart\Models\FlowchartQuestion.Math4
+    Feedback:
+      - =>ChTombleson\Flowchart\Models\FlowchartFeedback.Test
+      - =>ChTombleson\Flowchart\Models\FlowchartFeedback.Testing
+    Votes:
+      - =>ChTombleson\Flowchart\Models\FlowchartVote.1
+      - =>ChTombleson\Flowchart\Models\FlowchartVote.2
+      - =>ChTombleson\Flowchart\Models\FlowchartVote.3
 

@@ -1,25 +1,48 @@
 <?php
+namespace ChTombleson\Flowchart\Models;
+
+use SilverStripe\Assets\Image;
+use SilverStripe\ORM\DataObject;
+use ChTombleson\Flowchart\Models\Flowchart;
+use SilverStripe\Forms\TextField;
+use SilverStripe\Forms\CheckboxField;
+use SilverStripe\Security\Permission;
+use ChTombleson\Flowchart\Models\FlowchartResponse;
+use SilverStripe\AssetAdmin\Forms\UploadField;
+use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
 
 class FlowchartQuestion extends DataObject
 {
+    /**
+     * @var array
+     */
     private static $db = [
         'Content' => 'HTMLText',
         'Info' => 'HTMLText',
         'Answer' => 'HTMLText',
         'QuestionHeading' => 'Varchar(255)', // The question heading, e.g. Question
         'AnswerHeading' => 'Varchar(255)', // The answer heading, e.g. Final answer
-        'AnswerImageAfterContent' => 'Boolean'
+        'AnswerImageAfterContent' => 'Boolean',
     ];
 
+    /**
+     * @var array
+     */
     private static $has_one = [
-        'Flowchart' => 'Flowchart',
-        'AnswerImage' => 'Image'
+        'Flowchart' => Flowchart::class,
+        'AnswerImage' => Image::class,
     ];
 
+    /**
+     * @var array
+     */
     private static $many_many = [
-        'Responses' => 'FlowchartResponse'
+        'Responses' => FlowchartResponse::class,
     ];
 
+    /**
+     * @var array
+     */
     private static $summary_fields = [
         'ID' => 'ID',
         'ContentSummary' => 'Question summary',
@@ -28,8 +51,14 @@ class FlowchartQuestion extends DataObject
         'AnswerSummary' => 'Answer summary'
     ];
 
+    /**
+     * @var string
+     */
     private static $flowcharts_asset_folder = 'flowcharts';
 
+    /**
+     * @inheritdoc
+     */
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
@@ -102,46 +131,73 @@ class FlowchartQuestion extends DataObject
         return $fields;
     }
 
+    /**
+     * @return string
+     */
     public function Title()
     {
         return $this->getTitle();
     }
 
+    /**
+     * @return string
+     */
     public function getTitle()
     {
-        return sprintf('%d - %s', $this->ID, $this->ContentSummary());
+        return sprintf('%d - %s', $this->ID, $this->getContentSummary());
     }
 
-    public function ContentSummary()
+    /**
+     * @return string
+     */
+    public function getContentSummary()
     {
         return strip_tags($this->Content);
     }
 
-    public function InfoSummary()
+    /**
+     * @return string
+     */
+    public function getInfoSummary()
     {
         return strip_tags($this->Info);
     }
 
+    /**
+     * @return string
+     */
     public function AnswerSummary()
     {
         return strip_tags($this->Answer);
     }
 
+    /**
+     * @return string
+     */
     public function FolderName()
     {
         return static::$flowcharts_asset_folder;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function canView($member = null)
     {
         return (Permission::checkMember($member, array('VIEW_FLOWCHART')));
     }
 
+    /**
+     * @inheritdoc
+     */
     public function canEdit($member = null)
     {
         return (Permission::checkMember($member, array('VIEW_FLOWCHART')));
     }
 
+    /**
+     * @return boolean
+     */
     public function hasAnswer()
     {
         return !empty($this->Answer);

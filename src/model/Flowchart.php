@@ -1,24 +1,52 @@
 <?php
+namespace ChTombleson\Flowchart\Models;
+
+use SilverStripe\View\SSViewer;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\View\ArrayData;
+use ChTombleson\Flowchart\Models\Flowchart;
+use SilverStripe\View\Requirements;
+use ChTombleson\Flowchart\Models\FlowchartVote;
+use SilverStripe\Forms\ReadonlyField;
+use SilverStripe\Security\Permission;
+use SilverStripe\Security\SecurityToken;
+use ChTombleson\Flowchart\Models\FlowchartFeedback;
+use ChTombleson\Flowchart\Models\FlowchartQuestion;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridFieldConfig_Base;
+use SilverStripe\Forms\GridField\GridFieldExportButton;
 
 class Flowchart extends DataObject
 {
+    /**
+     * @var array
+     */
     private static $db = [
         'Title' => 'Varchar(100)',
         'VotingDisabled' => 'Boolean',
         'FeedbackDisabled' => 'Boolean',
     ];
 
+    /**
+     * @var array
+     */
     private static $has_many = [
-        'Questions' => 'FlowchartQuestion',
-        'Feedback' => 'FlowchartFeedback',
-        'Votes' => 'FlowchartVote',
+        'Questions' => FlowchartQuestion::class,
+        'Feedback' => FlowchartFeedback::class,
+        'Votes' => FlowchartVote::class,
     ];
 
+    /**
+     * @var array
+     */
     private static $summary_fields = [
         'Title' => 'Title',
         'Shortcode' => 'Shortcode',
     ];
 
+    /**
+     * @inheritdoc
+     */
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
@@ -68,8 +96,8 @@ class Flowchart extends DataObject
             $fields->addFieldsToTab(
                 'Root.Main',
                 [
-                    ReadonlyField::create(null, 'Total Votes', $this->Votes()->count()),
-                    ReadonlyField::Create(null, 'Average Vote', $this->averageVote()),
+                    ReadonlyField::create('TotalVotes', 'Total Votes', $this->Votes()->count()),
+                    ReadonlyField::Create('AvergageVote', 'Average Vote', $this->averageVote()),
                 ]
             );
         }
@@ -77,28 +105,40 @@ class Flowchart extends DataObject
         if ($this->ID) {
             $fields->addFieldToTab(
                 'Root.Main',
-                ReadonlyField::create(null, 'Shortcode', $this->Shortcode())
+                ReadonlyField::create('ShortCode', 'Shortcode', $this->getShortcode())
             );
         }
 
         return $fields;
     }
 
-    public function canCreate($member = null)
+    /**
+     * @inheritdoc
+     */
+    public function canCreate($member = null, $context = array())
     {
         return Permission::checkMember($member, ['EDIT_FLOWCHART']);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function canEdit($member = null)
     {
         return Permission::checkMember($member, ['EDIT_FLOWCHART']);
     }
 
-    public function Shortcode()
+    /**
+     * @return string
+     */
+    public function getShortcode()
     {
         return '[flowchart id="' . $this->ID . '"]';
     }
 
+    /**
+     * @return integer
+     */
     public function averageVote()
     {
         $total = 0;
@@ -107,9 +147,16 @@ class Flowchart extends DataObject
             $total += $vote->Value;
         }
 
+        if ($total == 0) {
+            return 0;
+        }
+
         return $total / $this->Votes()->count();
     }
 
+    /**
+     * @return string
+     */
     public static function shortcodeHandler($arguments, $content = null, $parser = null, $tagName)
     {
         if (!isset($arguments['id'])) {
@@ -122,10 +169,10 @@ class Flowchart extends DataObject
             return null;
         }
 
-        Requirements::css('silverstripe-flowchart/css/flowchart.css');
+        Requirements::css('chtombleson/silverstripe-flowchart:css/flowchart.css');
 
-        Requirements::javascript(FRAMEWORK_DIR . '/thirdparty/jquery/jquery.min.js');
-        Requirements::javascript('silverstripe-flowchart/javascript/flowchart.js');
+        // Requirements::javascript(FRAMEWORK_DIR . '/thirdparty/jquery/jquery.min.js');
+        Requirements::javascript('chtombleson/silverstripe-flowchart:js/flowchart.js');
 
         // Security tokens for form
         $securityToken = new SecurityToken('Flowchart_' . $flowchart->ID);
