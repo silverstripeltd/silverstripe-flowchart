@@ -152,7 +152,7 @@ class FlowchartQuestion extends DataObject
      */
     public function getContentSummary()
     {
-        return strip_tags($this->Content);
+        return strip_tags($this->Content ?? '');
     }
 
     /**
@@ -160,7 +160,7 @@ class FlowchartQuestion extends DataObject
      */
     public function getInfoSummary()
     {
-        return strip_tags($this->Info);
+        return strip_tags($this->Info ?? '');
     }
 
     /**
@@ -168,7 +168,7 @@ class FlowchartQuestion extends DataObject
      */
     public function AnswerSummary()
     {
-        return strip_tags($this->Answer);
+        return strip_tags($this->Answer ?? '');
     }
 
     /**
