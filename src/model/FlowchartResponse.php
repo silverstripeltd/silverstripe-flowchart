@@ -1,12 +1,12 @@
 <?php
 namespace ChTombleson\Flowchart\Models;
 
-use SilverStripe\ORM\DataObject;
+use ChTombleson\Flowchart\Models\FlowchartQuestion;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\LiteralField;
 use SilverStripe\Forms\DropdownField;
+use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Permission;
-use ChTombleson\Flowchart\Models\FlowchartQuestion;
 
 class FlowchartResponse extends DataObject
 {
@@ -134,7 +134,7 @@ class FlowchartResponse extends DataObject
      */
     public function canView($member = null)
     {
-        return (Permission::checkMember($member, array('VIEW_FLOWCHART')));
+        return (Permission::checkMember($member, ['VIEW_FLOWCHART']));
     }
 
     /**
@@ -142,6 +142,6 @@ class FlowchartResponse extends DataObject
      */
     public function canEdit($member = null)
     {
-        return (Permission::checkMember($member, array('VIEW_FLOWCHART')));
+        return (Permission::checkMember($member, ['VIEW_FLOWCHART']));
     }
 }

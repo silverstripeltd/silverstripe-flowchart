@@ -5,5 +5,5 @@ use SilverStripe\View\Parsers\ShortcodeParser;
 
 ShortcodeParser::get('default')->register(
     'flowchart',
-    [Flowchart::class, 'shortcodeHandler']
+    [Flowchart::class, 'handle_shortcode']
 );

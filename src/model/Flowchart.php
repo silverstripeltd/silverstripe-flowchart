@@ -1,20 +1,20 @@
 <?php
 namespace ChTombleson\Flowchart\Models;
 
-use SilverStripe\View\SSViewer;
-use SilverStripe\ORM\DataObject;
-use SilverStripe\View\ArrayData;
 use ChTombleson\Flowchart\Models\Flowchart;
-use SilverStripe\View\Requirements;
-use ChTombleson\Flowchart\Models\FlowchartVote;
-use SilverStripe\Forms\ReadonlyField;
-use SilverStripe\Security\Permission;
-use SilverStripe\Security\SecurityToken;
 use ChTombleson\Flowchart\Models\FlowchartFeedback;
 use ChTombleson\Flowchart\Models\FlowchartQuestion;
+use ChTombleson\Flowchart\Models\FlowchartVote;
 use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridFieldConfig_Base;
 use SilverStripe\Forms\GridField\GridFieldExportButton;
+use SilverStripe\Forms\ReadonlyField;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\Security\Permission;
+use SilverStripe\Security\SecurityToken;
+use SilverStripe\View\ArrayData;
+use SilverStripe\View\Requirements;
+use SilverStripe\View\SSViewer;
 
 class Flowchart extends DataObject
 {
@@ -115,7 +115,7 @@ class Flowchart extends DataObject
     /**
      * @inheritdoc
      */
-    public function canCreate($member = null, $context = array())
+    public function canCreate($member = null, $context = [])
     {
         return Permission::checkMember($member, ['EDIT_FLOWCHART']);
     }
@@ -157,7 +157,7 @@ class Flowchart extends DataObject
     /**
      * @return string
      */
-    public static function shortcodeHandler($arguments, $content = null, $parser = null, $tagName)
+    public static function handle_shortcode($arguments, $content = null, $parser = null, $shortcode = null, $extra = [])
     {
         if (!isset($arguments['id'])) {
             return null;

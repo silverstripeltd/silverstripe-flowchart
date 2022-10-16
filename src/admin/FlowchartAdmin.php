@@ -31,24 +31,24 @@ class FlowchartAdmin extends ModelAdmin implements PermissionProvider
      */
     public function providePermissions()
     {
-        return array(
-            'VIEW_FLOWCHART' => array(
+        return [
+            'VIEW_FLOWCHART' => [
                 'name' => _t('Comment.PERMISSION_CREATE_DESCRIPTION', 'Can view and export Flowcharts'),
                 'category' => _t('Permissions.CONTENT_CATEGORY', 'Content Permissions'),
                 'help' => _t(
                     'Comment.PERMISSION_CREATE_HELP',
                     'Permission required to view and export Flowcharts from the CMS.'
                 )
-            ),
-            'EDIT_FLOWCHART' => array(
+            ],
+            'EDIT_FLOWCHART' => [
                 'name' => _t('Comment.PERMISSION_CREATE_DESCRIPTION', 'Can edit and create Flowcharts'),
                 'category' => _t('Permissions.CONTENT_CATEGORY', 'Content Permissions'),
                 'help' => _t(
                     'Comment.PERMISSION_CREATE_HELP',
                     'Permission required to edit and create Flowcharts from the CMS.'
                 )
-            ),
-        );
+            ],
+        ];
     }
 
     /**

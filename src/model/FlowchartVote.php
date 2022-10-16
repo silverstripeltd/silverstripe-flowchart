@@ -1,8 +1,8 @@
 <?php
 namespace ChTombleson\Flowchart\Models;
 
-use SilverStripe\ORM\DataObject;
 use ChTombleson\Flowchart\Models\Flowchart;
+use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Permission;
 
 class FlowchartVote extends DataObject
@@ -34,7 +34,7 @@ class FlowchartVote extends DataObject
     /**
      * @inheritdoc
      */
-    public function canCreate($member = null, $context = array())
+    public function canCreate($member = null, $context = [])
     {
         return false;
     }
