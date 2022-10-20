@@ -32,7 +32,7 @@ class FlowchartFeedback extends DataObject
     /**
      * @inheritdoc
      */
-    public function canCreate($member = null, $context = array())
+    public function canCreate($member = null, $context = [])
     {
         return false;
     }
@@ -58,6 +58,6 @@ class FlowchartFeedback extends DataObject
      */
     public function canView($member = null)
     {
-        return (Permission::checkMember($member, array('VIEW_FLOWCHART')));
+        return (Permission::checkMember($member, ['VIEW_FLOWCHART']));
     }
 }

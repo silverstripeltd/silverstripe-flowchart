@@ -1,1 +1,14 @@
-*.swp
+.idea
+.DS_Store
+.graphql-generated
+.phpunit.result.cache
+
+composer.lock
+
+_graphql
+app
+assets
+docker*
+resources
+silverstripe-cache
+vendor

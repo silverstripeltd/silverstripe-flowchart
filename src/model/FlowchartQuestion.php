@@ -1,15 +1,15 @@
 <?php
 namespace ChTombleson\Flowchart\Models;
 
-use SilverStripe\Assets\Image;
-use SilverStripe\ORM\DataObject;
 use ChTombleson\Flowchart\Models\Flowchart;
+use ChTombleson\Flowchart\Models\FlowchartResponse;
+use SilverStripe\Assets\Image;
+use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\CheckboxField;
-use SilverStripe\Security\Permission;
-use ChTombleson\Flowchart\Models\FlowchartResponse;
-use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\Security\Permission;
 
 class FlowchartQuestion extends DataObject
 {
@@ -152,7 +152,7 @@ class FlowchartQuestion extends DataObject
      */
     public function getContentSummary()
     {
-        return strip_tags($this->Content);
+        return strip_tags($this->Content ?? '');
     }
 
     /**
@@ -160,7 +160,7 @@ class FlowchartQuestion extends DataObject
      */
     public function getInfoSummary()
     {
-        return strip_tags($this->Info);
+        return strip_tags($this->Info ?? '');
     }
 
     /**
@@ -168,7 +168,7 @@ class FlowchartQuestion extends DataObject
      */
     public function AnswerSummary()
     {
-        return strip_tags($this->Answer);
+        return strip_tags($this->Answer ?? '');
     }
 
     /**
@@ -176,7 +176,7 @@ class FlowchartQuestion extends DataObject
      */
     public function FolderName()
     {
-        return static::$flowcharts_asset_folder;
+        return self::$flowcharts_asset_folder;
     }
 
     /**
@@ -184,7 +184,7 @@ class FlowchartQuestion extends DataObject
      */
     public function canView($member = null)
     {
-        return (Permission::checkMember($member, array('VIEW_FLOWCHART')));
+        return (Permission::checkMember($member, ['VIEW_FLOWCHART']));
     }
 
     /**
@@ -192,7 +192,7 @@ class FlowchartQuestion extends DataObject
      */
     public function canEdit($member = null)
     {
-        return (Permission::checkMember($member, array('VIEW_FLOWCHART')));
+        return (Permission::checkMember($member, ['VIEW_FLOWCHART']));
     }
 
     /**
