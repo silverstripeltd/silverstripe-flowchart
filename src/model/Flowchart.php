@@ -1,7 +1,6 @@
 <?php
 namespace ChTombleson\Flowchart\Models;
 
-use ChTombleson\Flowchart\Models\Flowchart;
 use ChTombleson\Flowchart\Models\FlowchartFeedback;
 use ChTombleson\Flowchart\Models\FlowchartQuestion;
 use ChTombleson\Flowchart\Models\FlowchartVote;
@@ -157,7 +156,7 @@ class Flowchart extends DataObject
     /**
      * @return string
      */
-    public static function handle_shortcode($arguments, $content = null, $parser = null, $shortcode = null, $extra = [])
+    public static function shortcodeHandler($arguments, $content = null, $parser = null, $shortcode = null, $extra = [])
     {
         if (!isset($arguments['id'])) {
             return null;
